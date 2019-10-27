@@ -194,7 +194,7 @@ def cross_validation(method, parameters):
     k_indices = build_k_indices(parameters[0], k_fold, seed)
     losses = []
     weights = []
-    
+
     for k in range(k_fold):
         y_tr, tX_tr, y_te, tX_te = select_values(parameters[0], parameters[1], k_indices, k)
         

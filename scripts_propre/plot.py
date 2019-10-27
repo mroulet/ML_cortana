@@ -53,8 +53,9 @@ def plot_my_values_log(weights, y, tX, degrees, gammas, lambdas):
     lamb = False
     
     if degrees :
-        deg = True
-    if gammas :
+        if len(degrees[0]) > 1:
+            deg = True
+    if gamma :
         gam = True
     if lambdas :
         lamb = True
@@ -106,7 +107,7 @@ def plotML_degree(accuracy, degrees):
 
 def plotML_lambda(accuracy, lambdas):
     """Visualization of the curves of accuracy vs degree"""
-    plt.plot(lambdas, accuracy, marker=".", label='curve')
+    plt.semilogx(lambdas, accuracy, marker=".", label='curve')
     plt.xlabel("lambda")
     plt.ylabel("accuracy")
     plt.title("Accuracy vs lambda")
