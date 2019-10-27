@@ -4,18 +4,35 @@ import numpy as np
 from helpers import *
 
 def optimization(y, tX, method, degrees, gammas, lambdas, grad):
-    """ Iterate you method on all your different parameters and return the weights and losses """
     
+    """ Iterate you method on all your different parameters and return the weights and losses 
+    Arguments:
+        y: labels
+        tx: features
+        method: method to be used
+        degrees : list of degrees (can be empty)
+        gammas : list of gammas (can be empty)
+        lambdas : list of lambdas (can be empty)
+        grad : contains the parameters for a gradient learning 
+                [bool(True if you want to do a gradient learning), w_init, max_iters] 
+    Returns:
+        weights: list of all the computed weights
+        losses: list of all losses 
+    """
+        
     # If your method uses gradients the function varies slighty, check optimize_grad
-    if grad[0] :
+    if grad[0]:
         weights, losses = optimization_grad(y, tX, method, degrees, gammas, lambdas, grad)
         return weights, losses
-       
     
+
+    # list that will regroup all your non empty parameters
     param = []
     deg = False
     
-    # Combine the parameters together (Note that if degrees is not empty it is always placed first)
+    # Combine the parameters together, the order of the parameters correspond
+    # to the same order as the arguments are given in the methods
+    # When adding a new method be aware of the order of your arguments
     if degrees :
         deg = True
         param.append(degrees)
@@ -23,17 +40,28 @@ def optimization(y, tX, method, degrees, gammas, lambdas, grad):
         param.append(gammas)
     if lambdas :
         param.append(lambdas)
-    if not param :
-        raise Exception('No parameters were entered in optimization')
-     
-    # Initialize parameters that will be used in method, losses and weights
+
+    # Initialize parameters, losses and weights
     parameters = []    
     losses = []
     weights = []
     
    
     # Do an optimization depending on the number of parameters
-    # If one type of parameter was given
+    # For each iteration: - create build poly (if degree option on)
+    #                     - stack values in parameters
+    #                     - run the method with parameters
+    #                     - save weight and loss obtained
+    
+    
+    # If 0 list of parameters (= param empty)
+    if not param:
+        parameters = [y, tX]
+        w, loss = test_methods(method, parameters)
+        losses.append(loss)
+        weights.append(w)
+            
+    # If 1 list of parameter was given
     if len(param) == 1:
         for ind1 in range(len(param[0][0])):
             if deg == True:
@@ -49,7 +77,7 @@ def optimization(y, tX, method, degrees, gammas, lambdas, grad):
                 losses.append(loss)
                 weights.append(w)
                 
-    # If two types of parameter were given
+    # If 2 lists of parameter were given
     if len(param) == 2:
         print('runing with two types of parameter...')
         for ind1 in range(len(param[0][0])):
@@ -68,7 +96,7 @@ def optimization(y, tX, method, degrees, gammas, lambdas, grad):
                     losses.append(loss)
                     weights.append(w)
                     
-    # If three types of parameter were given
+    # If 3 lists of parameter were given
     if len(param) == 3:
         print('runing with three types of parameter...')
         for ind1 in range(len(param[0][0])):
@@ -94,12 +122,25 @@ def optimization(y, tX, method, degrees, gammas, lambdas, grad):
 
 
 def optimization_grad(y, tX, method, degrees, gammas, lambdas, grad):
-    """ Iterate you method on all your different parameters and return the weights and losses """
+    """ Iterate you method on all your different parameters and return the weights and losses 
+    Arguments:
+        y: labels
+        tx: features
+        method: method to be used
+        degrees : list of degrees (can be empty)
+        gammas : list of gammas (can be empty)
+        lambdas : list of lambdas (can be empty)
+        grad : contains the parameters for a gradient learning 
+                [bool(True if you want to do a gradient learning), w_init, max_iters] 
+    Returns:
+        weights: list of all the computed weights
+        losses: list of all losses
+    """
     
     param = []
     deg = False
     
-    # Combine the parameters together (Note that if degrees is not empty it is always placed first)
+    # list that will regroup all your non empty parameters
     if degrees :
         deg = True
         param.append(degrees)
@@ -107,21 +148,27 @@ def optimization_grad(y, tX, method, degrees, gammas, lambdas, grad):
         param.append(gammas)
     if lambdas :
         param.append(lambdas)
-    if not param :
-        raise Exception('No parameters were entered in optimization')
      
     # Initialize parameters that will be used in method, losses and weights
     parameters = []    
     losses = []
     weights = []
     
+
+    
     # Create w_initial if it is not already
     if not deg and not grad[1]:
         grad[1] = [np.zeros(tX.shape[1])]
-        
-   
+       
+    
     # Do an optimization depending on the number of parameters
-    # If one type of parameter was given
+    # For each iteration: - create build poly (if degree option on)
+    #                     - stack values in parameters
+    #                     - run the method with parameters
+    #                     - save weight and loss obtained
+    
+    
+    # If 1 lists of parameter were given
     if len(param) == 1:
         for ind1 in range(len(param[0][0])):
             if deg == True:
@@ -138,7 +185,7 @@ def optimization_grad(y, tX, method, degrees, gammas, lambdas, grad):
                 losses.append(loss)
                 weights.append(w)
                 
-    # If two types of parameter were given
+    # If 2 lists of parameter were given
     if len(param) == 2:
         print('runing with two types of parameter...')
         for ind1 in range(len(param[0][0])):
@@ -158,7 +205,7 @@ def optimization_grad(y, tX, method, degrees, gammas, lambdas, grad):
                     losses.append(loss)
                     weights.append(w)
                     
-    # If three types of parameter were given
+    # If 3 lists of parameter were given
     if len(param) == 3:
         print('runing with three types of parameter...')
         for ind1 in range(len(param[0][0])):
