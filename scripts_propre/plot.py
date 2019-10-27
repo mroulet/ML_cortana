@@ -55,7 +55,7 @@ def plot_my_values_log(weights, y, tX, degrees, gammas, lambdas):
     if degrees :
         if len(degrees[0]) > 1:
             deg = True
-    if gamma :
+    if gammas :
         gam = True
     if lambdas :
         lamb = True

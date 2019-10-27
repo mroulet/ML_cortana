@@ -204,6 +204,8 @@ def cross_validation(method, parameters):
             w, loss = method(parameters[0], parameters[1], parameters[2])
         elif (len(parameters) == 4):
             w, loss = method(parameters[0], parameters[1], parameters[2], parameters[3])
+        elif (len(parameters) == 5):
+            w, loss = method(parameters[0], parameters[1], parameters[2], parameters[3], parameters[4])
         else :
             raise Exception('Uncorrect number of parameters in cross_validation')
         
