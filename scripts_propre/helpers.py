@@ -105,7 +105,7 @@ def build_k_indices(y, k_fold, seed):
     return np.array(k_indices)
 
 ##******************************************************************
-def select_index(y, tX, k_indices, k) :
+def select_values(y, tX, k_indices, k) :
     
     y_te, tX_te = y[k_indices[k]], tX[k_indices[k]]
     k_indices = np.ma.array(k_indices, mask=False)      #Create mask on k_indices
@@ -118,12 +118,10 @@ def select_index(y, tX, k_indices, k) :
 ##******************************************************************
 def weight_mean(weights):
     """ Mean weight of a collection of weights. """
-    
-    w = np.zeros(30)
+    w = np.zeros(weights[0].shape)
     W = np.stack(weights, axis=0)
-    for ind in range(30):
+    for ind in range(w.shape[0]):
         w[ind] = np.mean(W[:, ind])
-    
     return w
 
 ##******************************************************************
@@ -188,6 +186,31 @@ def test_methods(method, parameters):
 
     return w, loss
 
+
+def cross_validation(method, parameters):
+    
+    k_fold = 4
+    seed = 1
+    k_indices = build_k_indices(parameters[0], k_fold, seed)
+    losses = []
+    weights = []
+    
+    for k in range(k_fold):
+        y_tr, tX_tr, y_te, tX_te = select_values(parameters[0], parameters[1], k_indices, k)
+        
+        if (len(parameters) == 2):
+            w, loss = method(parameters[0], parameters[1])
+        elif (len(parameters) == 3):
+            w, loss = method(parameters[0], parameters[1], parameters[2])
+        elif (len(parameters) == 4):
+            w, loss = method(parameters[0], parameters[1], parameters[2], parameters[3])
+        else :
+            raise Exception('Uncorrect number of parameters in cross_validation')
+        
+        losses.append(loss)
+        weights.append(w)
+
+    return weight_mean(weights), np.mean(loss)
 
 
 def build_cross_terms(tx):
