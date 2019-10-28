@@ -3,11 +3,11 @@
 ## Learning to discover: the Higgs boson machine learning challenge
 
 ### Team member
-* Nino Hervé, nino.herve@epfl.ch
-* Florent Jeanpetit, florent.jeanpetit@epfl.ch
-* Margaux Roulet, margaux.roulet@epfl.ch
+Nino Hervé, nino.herve@epfl.ch   
+Florent Jeanpetit, florent.jeanpetit@epfl.ch   
+Margaux Roulet, margaux.roulet@epfl.ch  
 
-* **Team name: Cortana**
+**Team name: Cortana**
 
 ### Project Description
 Binary classifier of Higgs Boson from CERN raw data.
