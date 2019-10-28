@@ -7,8 +7,7 @@ from helpers import *
 ## *************************************************** 
 ## GRADIENT DESCENT
 ## *************************************************** 
-def least_squares_GD(y, tX, w_initial, max_iters, gamma):
-    
+def least_squares_GD(y, tX, w_initial, max_iters, gamma):   
     """Linear regression using gradient descent algorithm
     Arguments:
         y: labels
@@ -115,7 +114,7 @@ def ridge_regression(y, tx, lambda_):
     Arguments:
         y: labels
         tx: features
-        lambda_: 
+        lambda_: penalizer
     Returns:
         w: optimized weight vector
         loss: optimized mean squared error
