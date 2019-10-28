@@ -18,18 +18,16 @@ The report contains a methodic search for an optimized implementation of machine
 ### Folders and Files
 #### data
 The pathway to open the csv datafile are referenced as ../data/"train.csv" or ../data/"test.csv". We invite you to upload your csv files into this folder.  
-The submission file is saved in this folder.
-
-#### plot
-Includes png plots generated with our console. They illustrate our results and were used to help us choose our model.
+The submission file is saved in this folder. The name of the file is submissioncortana.csv
 
 #### scripts
 * implementations.py: includes the six regressions methods
-* run.py : includes our best model submission. You can run this file from raw data and it will create a submission file in csv format containing prediction and their respective indexes.
+* run.py : includes our optimized machine learning model. You can run this file from raw data and it will create a submission file in csv format containing prediction and their respective indexes.
 * helpers.py: includes small algorithms as computation functions, cross validation,...
+* data_manager.py: includes all data processing functions
 * proj1_helpers.py: provided with the project. They contain loading data functions and creating submission function
 * plot.py: include plot functions generated with our consoles to visualize our results.
-* test_runners.py: includes our main tests. Iteration functions that allows to run through all our methods with different parameters from a single notebook.
+* test_runners.py: iteration functions that allows to run through all our methods with different parameters from a single notebook.
 
 * main_notebook.pypnb: Includes our Machine Learning procedure:
   * test basic regression methods implementation
