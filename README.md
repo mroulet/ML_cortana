@@ -3,30 +3,33 @@
 ## Learning to discover: the Higgs boson machine learning challenge
 
 ### Team member
-* Item Nino Hervé, nino.herve@epfl.ch
-* Item Florent Jeanpetit, florent.jeanpetit@epfl.ch
-* Item Margaux Roulet, margaux.roulet@epfl.ch
+* Nino Hervé, nino.herve@epfl.ch
+* Florent Jeanpetit, florent.jeanpetit@epfl.ch
+* Margaux Roulet, margaux.roulet@epfl.ch
+
+* **Team name: Cortana**
 
 ### Project Description
 Binary classifier of Higgs Boson from CERN raw data.
 
 ### Report
-The report contains a methodic search for an optimized implementation including processing of data, feature engineering and model selection.
+The report contains a methodic search for an optimized implementation of machine learning regression methods. It includes processing of data, feature engineering and model selection.
 
 ### Folders and Files
 #### data
-The pathway to open the csv datafile are referenced is ../data/"train.csv" or ../data/"test.csv". We invite you to upload your csv file into this folder.
+The pathway to open the csv datafile are referenced as ../data/"train.csv" or ../data/"test.csv". We invite you to upload your csv files into this folder.  
+The submission file is saved in this folder.
 
 #### plot
-Includes png plots generated with our console. They illustrate our results.
+Includes png plots generated with our console. They illustrate our results and were used to help us choose our model.
 
-#### script
+#### scripts
 * implementations.py: includes the six regressions methods
-* run.py : Includes our best model submission. You can run this file from raw data and it will create a submission file in csv format containing prediction and their respective indexes.
-* helpers.py: Includes small algorithms as computation functions, cross validation,...
-* proj1_helpers.py: Provided with the project. They contain loading data functions and creating submission function
-* plot.py: Include plot functions generated with our consoles to visualize our results.
-* test_runners.py: Includes our main tests. Iteration functions that allows to run through all our methods with different parameters from a single notebook.
+* run.py : includes our best model submission. You can run this file from raw data and it will create a submission file in csv format containing prediction and their respective indexes.
+* helpers.py: includes small algorithms as computation functions, cross validation,...
+* proj1_helpers.py: provided with the project. They contain loading data functions and creating submission function
+* plot.py: include plot functions generated with our consoles to visualize our results.
+* test_runners.py: includes our main tests. Iteration functions that allows to run through all our methods with different parameters from a single notebook.
 
 * main_notebook.pypnb: Includes our Machine Learning procedure:
   * test basic regression methods implementation
