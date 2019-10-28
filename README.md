@@ -35,3 +35,7 @@ The submission file is saved in this folder. The name of the file is submissionc
   * find optimal hyperparameters for ridge regression
   * test the accuracy score from train.csv for the best model chosen
   * run the code for our final submission
+
+### instruction to run
+* add the 2 .csv files from the CERN in the data folder
+* run run.py on your favorite interface
