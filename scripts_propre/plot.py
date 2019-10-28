@@ -90,30 +90,42 @@ def plotML_gamma(accuracy, gammas):
     plt.semilogx(gammas, accuracy, marker=".", label='curve')
     plt.xlabel("gamma")
     plt.ylabel("accuracy")
+    plt.ylim([0.72, 0.85])
     plt.title("Accuracy vs gamma")
     plt.legend(loc=2)
     plt.grid(True)
-    plt.savefig("Gammacuracy")
+    plt.savefig('jet_pack', dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', papertype=None, format='eps',
+        transparent=False, bbox_inches=None, pad_inches=0.1,
+        frameon=None, metadata=None)
 
 def plotML_degree(accuracy, degrees):
     """Visualization of the curves of accuracy vs degree"""
     plt.plot(degrees, accuracy, marker=".", label='curve')
     plt.xlabel("degree")
     plt.ylabel("accuracy")
+    plt.ylim([0.72, 0.85])
     plt.title("Accuracy vs degree")
     plt.legend(loc=2)
     plt.grid(True)
-    plt.savefig("degreacuracy")
+    plt.savefig('jet_pack', dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', papertype=None, format='eps',
+        transparent=False, bbox_inches=None, pad_inches=0.1,
+        frameon=None, metadata=None)
 
 def plotML_lambda(accuracy, lambdas):
     """Visualization of the curves of accuracy vs degree"""
     plt.semilogx(lambdas, accuracy, marker=".", label='curve')
     plt.xlabel("lambda")
     plt.ylabel("accuracy")
+    plt.ylim([0.72, 0.85])
     plt.title("Accuracy vs lambda")
     plt.legend(loc=2)
     plt.grid(True)
-    plt.savefig("lambdacuracy")
+    plt.savefig('jet_pack', dpi=None, facecolor='w', edgecolor='w',
+        orientation='portrait', papertype=None, format='eps',
+        transparent=False, bbox_inches=None, pad_inches=0.1,
+        frameon=None, metadata=None)
     
     
 def plotML_3D(accuracy, degrees, gammas):

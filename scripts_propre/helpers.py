@@ -189,7 +189,7 @@ def test_methods(method, parameters):
 
 def cross_validation(method, parameters):
     
-    k_fold = 4
+    k_fold = 10
     seed = 1
     k_indices = build_k_indices(parameters[0], k_fold, seed)
     losses = []
@@ -209,10 +209,11 @@ def cross_validation(method, parameters):
         else :
             raise Exception('Uncorrect number of parameters in cross_validation')
         
-        losses.append(loss)
+        loss_te = np.sqrt(2*compute_loss(y_te, tX_te, w))
+        losses.append(loss_te)
         weights.append(w)
 
-    return weight_mean(weights), np.mean(loss)
+    return weight_mean(weights), np.mean(losses)
 
 
 def build_cross_terms(tx):

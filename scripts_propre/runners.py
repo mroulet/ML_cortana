@@ -591,3 +591,43 @@ def test(y, tx, method):
         raise Exception('Invalid method name')
         
     return score
+
+
+def optimal_hyperparameters(y_train, processed_tx_train):
+    """
+    Find optimal degree to expand features
+    Find optimal lambda for ridge regression
+    Arguments:
+        y_train = labels
+        processed_tx_train = features
+    Returns:
+        optimal_degree, optimal_lambda = optimal hyperparamaters that minimze the root mean square error loss
+    """
+    
+    degrees = range(5, 9)
+    lambdas = np.logspace(-12, -4, 40)
+    min_loss_test = 10e6
+    
+
+    for index_degree, degree in enumerate(degrees):
+
+        # Build polynomial tx
+        poly_tx_train = build_poly(processed_tx_train, degree)
+        
+            
+        for ind, lambda_ in enumerate(lambdas):
+            
+            parameters = [y_train, poly_tx_train, lambda_]
+            _, mean_loss_test = cross_validation(ridge_regression, parameters)
+            
+            # Optimal parameters condition
+            if mean_loss_test < min_loss_test:
+                min_loss_test = mean_loss_test 
+                optimal_degree = degree
+                optimal_lambda = lambda_
+                
+        print('best for degree ', optimal_degree, 
+               ' lambda:', optimal_lambda, '-> RMSE  = ', mean_loss_test)
+    
+    return optimal_degree, optimal_lambda
+
