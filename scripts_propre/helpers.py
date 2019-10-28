@@ -4,12 +4,20 @@ import numpy as np
 
 ## ******************************************************************
 def sigmoid(t):
-    """apply sigmoid function on t."""
+    """apply sigmoid function on t.
+    """
     return 1. / (1+np.exp(-t))
 
 ## ******************************************************************
 def compute_logistic_loss(y, tx, w,):
-    """compute the cost by negative log likelihood."""
+    """compute the cost by negative log likelihood.
+    Arguments:
+        y: label
+        tx: feature
+        w: weights
+    Return:
+        logistic loss
+    """
     a = np.sum(np.log(1+np.exp(tx.dot(w))))
     b = y.T.dot(tx.dot(w))
     
@@ -17,13 +25,27 @@ def compute_logistic_loss(y, tx, w,):
     
 ## ******************************************************************
 def compute_logistic_gradient(y, tx, w):
-    """compute the gradient of loss."""
+    """compute the gradient of loss.
+    Arguments:
+        y: label
+        tx: feature
+        w: weights
+    Return:
+        gradient
+    """
     return tx.T.dot(sigmoid(tx.dot(w))-y)
 
 
 ## ****************************************************************** 
 def compute_loss(y, tx, w):
-    """compute the loss by mse."""
+    """ compute the loss by mse.
+    Arguments:
+        y: label
+        tx feature
+        w: weight
+    Return:
+        mse: mean square error
+    """
     # error vector
     e = y - tx.dot(w)
     mse = e.dot(e) / (2 * len(e))
@@ -70,7 +92,14 @@ def batch_iter(y, tx, batch_size, num_batches=1, shuffle=True):
 ##******************************************************************
 
 def build_poly(tx, degree):
-    """polynomial basis functions for input data x, for j=0 up to j=degree."""
+    """polynomial basis functions for input data x, for j=0 up to j=degree.
+    Buil polynomial data from initial data. 
+    Arguments:
+        tx: features
+        degree: degree of the polynomial
+    Reutnr:
+        poly_tx: extended polynomial feature
+    """
     
     poly_tx = np.ones((len(tx), 1))
     # iterate through features column
@@ -85,17 +114,20 @@ def build_poly(tx, degree):
                 poly_tx = np.c_[poly_tx, np.power(tx[ :, col], degree)]
             else:
                 poly_tx = np.c_[poly_tx,np.power(x,degree)]
-        
-        # once i feature poly built, add vector of ones for i+1 feature
-        #if tx.shape[1] > 1 and col != tx.shape[1] - 1:
-        #   poly_tx = np.c_[poly_tx, np.ones((len(tx), 1))] 
      
     return poly_tx
 
 
 ##******************************************************************
 def build_k_indices(y, k_fold, seed):
-    """build k indices for k-fold."""
+    """build k indices for k-fold.
+    Arguments:
+        y: labels
+        l_fold: number of folds
+        seed: to create a random sequence
+    Return: 
+        k_indices: 
+    """
     num_row = y.shape[0]
     interval = int(num_row / k_fold)
     np.random.seed(seed)
@@ -106,11 +138,28 @@ def build_k_indices(y, k_fold, seed):
 
 ##******************************************************************
 def select_values(y, tX, k_indices, k) :
-    
+    """ Select the values for cross validation used
+    Arguments: 
+        y: labels
+        tX: feature
+        k_indices: index array
+        k: index of the fold
+    Returns:
+        y_tr: train label
+        tX-tr: train feature
+        y_te: test label
+        tX:te: test feature
+    """
     y_te, tX_te = y[k_indices[k]], tX[k_indices[k]]
-    k_indices = np.ma.array(k_indices, mask=False)      #Create mask on k_indices
-    k_indices.mask[k] = True                            #Hide the kth line of k_indices with mask
-    k_indices_tr = np.ravel(k_indices).compressed()     #ravel->transform indices into array/compressed->eliminate masked values
+    #Create mask on k_indices
+    k_indices = np.ma.array(k_indices, mask=False) 
+    
+    #Hide the kth line of k_indices with mask
+    k_indices.mask[k] = True  
+    
+    #ravel->transform indices into array/compressed->eliminate masked values
+    k_indices_tr = np.ravel(k_indices).compressed()   
+    
     y_tr, tX_tr = y[k_indices_tr], tX[k_indices_tr]
     
     return y_tr, tX_tr, y_te, tX_te
@@ -126,19 +175,30 @@ def weight_mean(weights):
 
 ##******************************************************************
 def test_score(y, tx, w):
+    """ Test the accuracy score 
+    Arguments:
+        y: known test labels
+        tx: validation set test feature
+        w: weights
+    Return: 
+        score: accuracy score
     """
     
-    """
-    y_pred = tx.dot(w)
-    y_pred[y_pred >= 0] = 1
-    y_pred[y_pred < 0] = -1
+    y_pred = predict(tx,w)
+    
     score = np.sum(y_pred == y) / float(len(y_pred))
+    
     print('Score: %', score * 100)
+    
     return score
 ##******************************************************************
 def predict(tx, w):
-    """
-    
+    """ Predict label of test feature
+    Arguments:
+        tx: feature
+        w: weights
+    Return:
+        y_pred: prediction
     """
     y_pred = tx.dot(w)
     y_pred[y_pred >= 0] = 1
@@ -146,32 +206,37 @@ def predict(tx, w):
     
     return y_pred
 ##******************************************************************
-
-
 def test_logistic_score(y, tx, w):
-    """
-    
+    """ Test the logistic accuracy score 
+    Arguments:
+        y: known test labels
+        tx: validation set test feature
+        w: weights
+    Return: 
+        score: accuracy score
     """
     y_pred = tx.dot(w)
     y_pred[y_pred > 0.5] = 1
     y_pred[y_pred <= 0.5] = 0
+    
     score = np.sum(y_pred == y) / float(len(y_pred))
+    
     print('Score: %', score * 100)
+    
     return score
 
 ##******************************************************************
 def test_methods(method, parameters):
-    ''' Test all methods with optimal parameters previously found by testing. 
+    """ Test all methods with optimal parameters previously found by testing. 
         Optimal parameters are initizialized within this method
         This test returns the score of each methods and is used 
         to determine which methods gives the highest score.
     Arguments:
-        y: labels
-        tx: features (not engineered)
         method: define which method to test
+        parameters: parameters to run on your method
     Returns:
         scores: final score of the method
-    '''
+    """
     
     if (len(parameters) == 2):
         w, loss = method(parameters[0], parameters[1])
@@ -188,6 +253,17 @@ def test_methods(method, parameters):
 
 
 def cross_validation(method, parameters):
+    """ Test all methods with optimal parameters previously found by testing. 
+        Optimal parameters are initizialized within this method
+        This test returns the score of each methods and is used 
+        to determine which methods gives the highest score.
+    Arguments:
+        method: define which method to test
+        parameters: parameters to run on your method
+    Returns:
+        scores: final score of the method
+    """
+    
     
     k_fold = 10
     seed = 1
@@ -217,13 +293,12 @@ def cross_validation(method, parameters):
 
 
 def build_cross_terms(tx):
-    '''
-    Build the cross term array 
+    """ Build the cross term array 
     Arguments:
         tx: features
     Returns:
         cross_terms: cross term array
-    '''
+    """
     cross_terms = []
     
     for feature1 in range(tx.shape[1]):
