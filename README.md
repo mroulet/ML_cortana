@@ -30,6 +30,7 @@ The submission file is saved in this folder. The name of the file is submissionc
 * test_runners.py: iteration functions that allows to run through all our methods with different parameters from a single notebook.
 
 * main_notebook.pypnb: Includes our Machine Learning procedure:
+  * test consol to visualize radom parameters and plot 2D graphs
   * test basic regression methods implementation
   * find optimal hyperparameters for ridge regression
   * test the accuracy score from train.csv for the best model chosen
